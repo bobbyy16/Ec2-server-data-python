@@ -5,7 +5,15 @@ ec2_client = boto3.client('ec2', region_name = "eu-west-3")
 
 
 def create_volume_snapshots():
-    volumes = ec2_client.describe_volumes()
+    volumes = ec2_client.describe_volumes(
+        # only create snapshots for prod / dev / testing servers
+        Filter = [
+            {
+                'Name': 'tag:Name',
+                'Values': ['prod']
+            }
+        ]
+    )
     for volume in volumes['Volumes']:
         new_snapshot = ec2_client.create_snapshot(
             volumeId = volume['VolumeId']
