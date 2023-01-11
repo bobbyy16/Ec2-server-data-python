@@ -7,7 +7,7 @@ clusters = client.list_clusters()['clusters']
 
 for cluster in clusters:
     response = client.describe_cluster(
-        name=cluster
+        name=cluster 
     )
     cluster_info = response['cluster']
     cluster_status = cluster_info['status']
